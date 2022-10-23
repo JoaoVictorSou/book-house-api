@@ -1,0 +1,29 @@
+{
+  "name": "book-house-api",
+  "version": "1.0.0",
+  "description": "The book library API.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoVictorSou/book-house-api.git"
+  },
+  "keywords": [
+    "library",
+    "book",
+    "node"
+  ],
+  "author": "sljoaos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoaoVictorSou/book-house-api/issues"
+  },
+  "homepage": "https://github.com/JoaoVictorSou/book-house-api#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

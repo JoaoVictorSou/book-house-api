@@ -10,6 +10,32 @@ BooksController.get("/books", (req, res) => {
         .json(books)
 });
 
+BooksController.get('/books/:id', (req, res) => {
+    const { id } = req.params
+
+    if (id) {
+        const book_index = get_book_index_in_array(id, books)
+        
+        if (book_index != -1) {
+            res.status(200)
+            res.json({
+                "message": "[SUC] BOOK WAS FOUND.",
+                book: books[book_index]
+            });
+        } else {
+            res.status(404)
+            res.json({
+                "message": "[ERR] BOOK NOT FOUND.",
+            });            
+        };
+    } else {
+        res.status(400)
+        res.json({
+            "message": "[ERR] PLEASE, INFORM THE BOOK INDENTIFICATOR.",
+        });  
+    };
+});
+
 BooksController.post('/books', (req, res) => {
     const book_title = req.body.title;
     
@@ -55,13 +81,13 @@ BooksController.put("/books/:id", (req, res) => {
             } else {
                 res.status(400)
             res.json({
-                "message": "[ERR] PLEASE, INFORM THE BOOK BOOK IDENTIFICATOR AT REQUEST BODY.",
+                "message": "[ERR] PLEASE, INFORM THE BOOK IDENTIFICATOR AT URL.",
             });
             };
         } else {
             res.status(404)
             res.json({
-                "message": "[ERR] BOOK NOT EXISTS.",
+                "message": "[ERR] BOOK NOT FOUND.",
             });
         }
     } else {
@@ -95,7 +121,7 @@ BooksController.delete('/books/:id', (req, res) => {
         } else {
             res.status(404)
             res.json({
-                "message": "[ERR] BOOK NOT EXISTS.",
+                "message": "[ERR] BOOK NOT FOUND.",
             });
         };
 

@@ -1,5 +1,6 @@
 import books from "./Book.js";
 import express from 'express';
+import { get_book_index_in_array } from "../util/books_aux.js";
 
 const BooksController = express.Router()
 
@@ -69,6 +70,41 @@ BooksController.put("/books/:id", (req, res) => {
             "message": "[ERR] PLEASE, INFORM THE BOOK IDENTIFICATOR AT URL.",
         });
     };
+});
+
+BooksController.delete('/books/:id', (req, res) => {
+    const { id } = req.params;
+
+    if (id) {
+        const book_index = get_book_index_in_array(id, books);
+        if (book_index != -1) {
+            // The slice method cut an interval
+            books.splice(book_index, 1);
+
+            if (get_book_index_in_array(id, books) == -1) {
+                res.status(200)
+                res.json({
+                    "message": "[SUC] BOOK IS DELETED.",
+                });    
+            } else {
+                res.status(500)
+                res.json({
+                    "message": "[ERR] BOOK IS NOT DELETED. SOMETHING WENT WRONG.",
+                });
+            };
+        } else {
+            res.status(404)
+            res.json({
+                "message": "[ERR] BOOK NOT EXISTS.",
+            });
+        };
+
+    } else {
+        res.status(400)
+        res.json({
+            "message": "[ERR] PLEASE, INFORM THE BOOK IDENTIFICATOR AT URL.",
+        });
+    }
 });
 
 export default BooksController;
